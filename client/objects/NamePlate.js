@@ -1,20 +1,22 @@
-class Nameplate {
-    constructor(playerName, playerPosition) {
-      this.playerName = playerName;
+class NamePlate {
+    constructor(playerId, playerPosition, playerColor) {
+      this.id = playerId;
       this.playerPosition = playerPosition;
+      this.color = playerColor;
+    //   this.text = createInput();
     }
   
     draw() {
-      // Draw the nameplate to the screen
-      context.fillStyle = 'black';
-      context.font = '12px Arial';
-      context.textAlign = 'center';
-      context.textBaseline = 'middle';
-      context.fillText(this.playerName, this.position.x, this.position.y);
+        fill(this.color);
+        textStyle(BOLD);
+        textSize(16);
+        textAlign(CENTER);
+        text(this.id, this.playerPosition.x, this.playerPosition.y - 30); // Draw the fixed text
+        // textStyle(NORMAL);
     }
 
-    update() {
-        // Update the nameplate's position to follow the player
-        this.position = this.playerPosition.add(new Vector2(0, -10)); // Offset the nameplate slightly above the player's head
+    update(playerPosition) {
+        // Offset the nameplate slightly above the player's head
+        this.position = playerPosition;
     }
-  }
+}

@@ -1,9 +1,12 @@
 class Player {
-  constructor(customSpeed = null) {
+  constructor(userId = 'Player', color="#ffffff") {
+    this.userId = userId
+    this.color = color;
     this.pos = createVector(width/2, height/2);
+    this.namePlate = new NamePlate(this.userId, this.pos, this.color);
     this.bullets = [];
     this.angle = 0;
-    this.customSpeed = customSpeed ? customSpeed : 2;
+    this.speed = 2;
   }
 
   draw() {
@@ -26,20 +29,24 @@ class Player {
     }
   }
 
+  drawNamePlate() {
+    this.namePlate.draw();
+  }
+  
   update(playerSide) {
     let sidewaysSpeed = 0;
     let forwardSpeed = 0;
     if (playerSide === "left") {
-      if (keyIsDown(65)) sidewaysSpeed = -this.customSpeed; // A
-      if (keyIsDown(68)) sidewaysSpeed = this.customSpeed; // D
-      if (keyIsDown(87)) forwardSpeed = -this.customSpeed; // S
-      if (keyIsDown(83)) forwardSpeed = this.customSpeed; // W
+      if (keyIsDown(65)) sidewaysSpeed = -this.speed; // A
+      if (keyIsDown(68)) sidewaysSpeed = this.speed; // D
+      if (keyIsDown(87)) forwardSpeed = -this.speed; // S
+      if (keyIsDown(83)) forwardSpeed = this.speed; // W
     }
     else if (playerSide === "right") {
-      if (keyIsDown(74)) sidewaysSpeed = -this.customSpeed; // J
-      if (keyIsDown(76)) sidewaysSpeed = this.customSpeed; // L
-      if (keyIsDown(73)) forwardSpeed = -this.customSpeed; // K
-      if (keyIsDown(75)) forwardSpeed = this.customSpeed; // I
+      if (keyIsDown(74)) sidewaysSpeed = -this.speed; // J
+      if (keyIsDown(76)) sidewaysSpeed = this.speed; // L
+      if (keyIsDown(73)) forwardSpeed = -this.speed; // K
+      if (keyIsDown(75)) forwardSpeed = this.speed; // I
     }
     this.pos.add(sidewaysSpeed, forwardSpeed);
   }

@@ -1,6 +1,10 @@
+let myPlayer;
+let sessionId;
+
 let players = [];
+let playersData = {};
 let zombies = [];
-let userName;
+// let userName;
 
 let framesTillCreate = 20;
 let frame = 0;
@@ -13,6 +17,7 @@ function setup() {
   for (i of [0, 1]) {
     players.push(new Player());
   }
+  playersData = {};
   zombieImg = loadImage("assets/zombie.png");
   playerImg = loadImage("assets/player.png");
   grassImg = loadImage("./assets/grass.jpg");
@@ -20,40 +25,54 @@ function setup() {
 
   // userName = prompt(`Username (How you're seen by others):`);
   // setSessionId(userName);
+  // 
+  sessionId = getSessionId();
 }
 
-function checkMatchStarted() {
-  // const matchStartMsg = `2 Players joined. Starting a match...`;
-  const matchStatus = document.querySelector('#matchStatus');
-  return matchStatus.innerHTML === 'started';
-}
+// function checkMatchStarted() {
+//   // const matchStartMsg = `2 Players joined. Starting a match...`;
+//   const matchStatus = document.querySelector('#matchStatus');
+//   return matchStatus.innerHTML === 'started';
+// }
 
 function showLoadingAnimation() {
-  let load = document.getElementsByClassName('loading-animation')[0].style.display = 'block';
-  return
+  document.getElementsByClassName('loading-animation')[0].style.display = 'block';
 }
 
 function hideLoadingAnimation() {
-  let load = document.getElementsByClassName('loading-animation')[0].style.display = 'none';
-  return;
+  document.getElementsByClassName('loading-animation')[0].style.display = 'none';
 }
 
 function draw() {
   if (!checkMatchStarted()) {
-    showLoadingAnimation(); // Show loading animation if waiting for more players to connect
+    // Show loading animation if waiting for more players to connect
+    showLoadingAnimation();
     return;
   }
   
-  hideLoadingAnimation(); // all players connected: starting match
+  // Start match if all players connected
+  hideLoadingAnimation();
   
   image(grassImg, 0, 0, width * 2, height * 2);
+  // spawnPlayers();
 
   frame++;
   let direction = "left";
   for (player of players) {
     player.draw();
-    player.update(direction);
-    direction = "right";
+    if (player.userId === sessionId) {
+      myPlayer = player;
+      player.update('left');
+    }
+    else {
+      player.update('right');
+    }
+  // for (const playerId in playersData) {
+  //   let player = playersData[playerId];
+
+    // player.namePlate.draw();
+    // player.namePlate.update();
+    player.drawNamePlate();
   }
   
   for (let i = zombies.length - 1; i >= 0; i--) {
@@ -78,18 +97,29 @@ function draw() {
   if (frameCount % 1000 == 0) {
     speed+=0.1;
   }
+  fill('#ffffff');
+  textStyle(NORMAL);
   textAlign(CENTER);
   textSize(40);
   text(score, width/2, 100);
   
-}
-
-function mouseClicked() {
-  players[0].shoot();
+  // broadCastMove();
 }
 
 function keyPressed() {
-  if (event.key === 'x') { // Check if 'x' (keyCode 120) is pressed
+  if (event.key === 'x') {
+    players[0].shoot();
+  }
+  if (event.key === 'm') {
     players[1].shoot();
   }
+  if (event.key === 'c') {
+    myPlayer.shoot();
+    broadCastEvent('shoot');
+    // broadCastShoot();
+  }
 }
+
+// function mouseClicked() {
+//   players[1].shoot();
+// }
