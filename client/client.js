@@ -119,6 +119,15 @@ sock.on('move', (json) => {
     // for (playerId in json.playersDict) {
     //     players.push(playersDict[playerId]);
     // }
+    for (player of players) {
+        if (player.userId === json.id) { // && player.userId !== getSessionId()) {
+            // player.shoot();
+            player.pos.x = json.posX;
+            player.pos.y = json.posY;
+            player.angle = json.angle;
+            // player.draw();
+        }
+    }
 })
 
 sock.on('shoot', (json) => {
@@ -137,11 +146,23 @@ sock.on('shoot', (json) => {
 //     // playersData[json.id] = new Player();
 // });
 
-function broadCastEvent(event) {
-    sock.emit(event, {
+// function broadCastEvent(event) {
+//     sock.emit(event, {
+//         id: getSessionId(),
+//         // color: getSessionColor(),
+//         // player: myPlayer,
+//     });
+//     // sock.emit('message', { 
+//     //     msg: `Player ${getSessionId()} shot`
+//     // });
+// }
+
+function broadCastMove() {
+    sock.emit('move', {
         id: getSessionId(),
-        // color: getSessionColor(),
-        // player: myPlayer,
+        posX: myPlayer.pos.x,
+        posY: myPlayer.pos.y,
+        angle: myPlayer.angle
     });
     // sock.emit('message', { 
     //     msg: `Player ${getSessionId()} shot`

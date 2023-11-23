@@ -103,7 +103,8 @@ function draw() {
   textSize(40);
   text(score, width/2, 100);
   
-  // broadCastMove();
+  // broadCastEvent('move');
+  broadCastMove();
 }
 
 function keyPressed() {
@@ -115,8 +116,8 @@ function keyPressed() {
   }
   if (event.key === 'c') {
     myPlayer.shoot();
-    broadCastEvent('shoot');
-    // broadCastShoot();
+    // broadCastEvent('shoot');
+    broadCastShoot();
   }
 }
 
