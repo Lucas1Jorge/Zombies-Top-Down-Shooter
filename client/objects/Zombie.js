@@ -31,7 +31,6 @@ class Zombie {
     rotate(this.angle);
     fill(100, 255, 100);
     image(zombieImg, 0, 0, 30, 30);
-    //rect(0, 0, 20, 20);
     pop();
   }
   

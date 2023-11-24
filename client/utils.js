@@ -8,6 +8,9 @@ function getRandomHexColor() {
 
     // purple: '#9107ef'
     // blue: '#3b19ef'
+
+    // lime green: "#cce157"
+    // pink: "#dc24a9"
 }
 
 function getSessionInfo() {
