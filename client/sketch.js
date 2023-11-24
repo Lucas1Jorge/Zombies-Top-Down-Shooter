@@ -2,9 +2,8 @@ let myPlayer;
 let sessionId;
 
 let players = [];
-let playersData = {};
+let playersDict = {};
 let zombies = [];
-// let userName;
 
 let framesTillCreate = 20;
 let frame = 0;
@@ -14,14 +13,16 @@ let score = 0;
 function setup() {
   createCanvas(700, 700);
   imageMode(CENTER);
+  playersDict = {};
+  players = []
   for (i of [0, 1]) {
     players.push(new Player());
+    playersDict[i] = new Player();
   }
-  playersData = {};
   zombieImg = loadImage("assets/zombie.png");
   playerImg = loadImage("assets/player.png");
   grassImg = loadImage("./assets/grass.jpg");
-  zombies.push(new Zombie(random(speed)));
+  // zombies.push(new Zombie(random(speed)));
 
   // userName = prompt(`Username (How you're seen by others):`);
   // setSessionId(userName);
@@ -49,18 +50,17 @@ function draw() {
   image(grassImg, 0, 0, width * 2, height * 2);
   frame++;
 
-  // spawnPlayers();
+  players = [];
+  for (userId in playersDict) {
+    players.push(playersDict[userId]);
+  }
+  
   for (player of players) {
     player.draw();
     if (player.userId === sessionId) {
       myPlayer = player;
-      player.update('left');
+      player.update();
     }
-    else {
-      player.update('right');
-    }
-  // for (const playerId in playersData) {
-  //   let player = playersData[playerId];
   
     player.drawNamePlate();
   }
@@ -97,12 +97,6 @@ function draw() {
 }
 
 function keyPressed() {
-  if (event.key === 'x') {
-    players[0].shoot();
-  }
-  if (event.key === 'm') {
-    players[1].shoot();
-  }
   if (event.key === 'c') {
     myPlayer.shoot();
     broadCastShoot();

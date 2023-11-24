@@ -74,30 +74,24 @@ sock.on('joinMatch', (json) => {
 
 sock.on('startMatch', (json) => {
     setMatchStatus('started');
-    players = [];
+    playersDict = {};
     for (playerId in json.playersDict) {
         let playerUpdated = json.playersDict[playerId];
         let playerCopy = new Player(playerUpdated.userId, playerUpdated.color);
-        players.push(playerCopy);
+        playersDict[playerId] = playerCopy;
     }
 });
 
 sock.on('move', (json) => {
-    for (player of players) {
-        if (player.userId === json.id) { // && player.userId !== getSessionId()) {
-            player.pos.x = json.posX;
-            player.pos.y = json.posY;
-            player.angle = json.angle;
-        }
-    }
+    let player = playersDict[json.id];
+    player.pos.x = json.posX;
+    player.pos.y = json.posY;
+    player.angle = json.angle;
 })
 
 sock.on('shoot', (json) => {
-    for (player of players) {
-        if (player.userId === json.id) { // && player.userId !== getSessionId()) {
-            player.shoot();
-        }
-    }
+    let player = playersDict[json.id];
+    player.shoot();
 })
 
 
