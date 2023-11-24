@@ -29,10 +29,12 @@ function newServerMsg(jsonArgs) {
 io.on('connection', (sock) => {
     let isHost = playersSockets.length === 0 ? true : false;
     playersSockets.push(sock);
+    
     sock.emit('joinMatch', newServerMsg({
         // matchId: 'testMatchId',
         'isHost': isHost
     }));
+
     sock.on('joinedMatch', (json) => {
         playersCnt++;
         console.log(`Joined confirmed. ${playersCnt} connected players`);
