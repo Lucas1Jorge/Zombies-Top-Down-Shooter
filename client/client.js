@@ -1,7 +1,7 @@
-// *****************************
-// ********* Socket.io *********
-// ******* Writing events ******
-// *****************************
+// ***********************************
+// *** Team chat: sending messages ***
+// ** Writing events with socket.io **
+// ***********************************
 
 function writeEvent(json) {
     // <ul> element
@@ -25,11 +25,6 @@ sock.on('message', writeEvent);
 
 
 
-// ****************************
-// ******** Team chat *********
-// ***** Sending messages *****
-// ****************************
-
 function onFormSubmitted(e) {
     e.preventDefault();
     
@@ -52,10 +47,10 @@ document
 
 
 
-// ****************************
-// ****** Match events ********
-// *** Creating and Joining ***
-// ****************************
+// ***********************************
+// ********** Match events ***********
+// ******** Enable listeners *********
+// ***********************************
 
 sock.on('joinMatch', (json) => {
     if (json.isHost) {
@@ -82,14 +77,6 @@ sock.on('joinMatch', (json) => {
         player: playersData[getSessionId()],
     })
 })
-
-function spawnPlayers() {
-    let i = 0;
-    for (id in playersData) {
-        players[i] = playersData[id];
-        i++;
-    }
-}
 
 sock.on('startMatch', (json) => {
     setMatchStatus('started');
@@ -119,16 +106,11 @@ sock.on('shoot', (json) => {
     }
 })
 
-// function broadCastEvent(event) {
-//     sock.emit(event, {
-//         id: getSessionId(),
-//         // color: getSessionColor(),
-//         // player: myPlayer,
-//     });
-//     // sock.emit('message', { 
-//     //     msg: `Player ${getSessionId()}'s event`
-//     // });
-// }
+
+
+// ***********************************
+// *********** Broadcasts ************
+// ***********************************
 
 function broadCastMove() {
     sock.emit('move', {
