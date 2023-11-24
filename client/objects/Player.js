@@ -35,18 +35,12 @@ class Player {
   update(playerSide) {
     let sidewaysSpeed = 0;
     let forwardSpeed = 0;
-    if (playerSide === "left") {
-      if (keyIsDown(65)) sidewaysSpeed = -this.speed; // A
-      if (keyIsDown(68)) sidewaysSpeed = this.speed; // D
-      if (keyIsDown(87)) forwardSpeed = -this.speed; // S
-      if (keyIsDown(83)) forwardSpeed = this.speed; // W
-    }
-    else if (playerSide === "right") {
-      if (keyIsDown(74)) sidewaysSpeed = -this.speed; // J
-      if (keyIsDown(76)) sidewaysSpeed = this.speed; // L
-      if (keyIsDown(73)) forwardSpeed = -this.speed; // K
-      if (keyIsDown(75)) forwardSpeed = this.speed; // I
-    }
+    
+    if (keyIsDown(65)) sidewaysSpeed = -this.speed; // A
+    if (keyIsDown(68)) sidewaysSpeed = this.speed; // D
+    if (keyIsDown(87)) forwardSpeed = -this.speed; // S
+    if (keyIsDown(83)) forwardSpeed = this.speed; // W
+
     this.pos.add(sidewaysSpeed, forwardSpeed);
     this.angle = atan2(mouseY - this.pos.y, mouseX - this.pos.x);
   }
