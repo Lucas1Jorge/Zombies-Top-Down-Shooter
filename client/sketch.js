@@ -77,7 +77,10 @@ function draw() {
   }
   
   if (frame > framesTillCreate && zombies.length < 10) {
-    zombies.push(new Zombie(random(speed)));
+    if (sessionId === 'Host') {
+      zombies.push(new Zombie(random(speed)));
+      broadCastZombie();
+    }
     frame = 0;
     if (framesTillCreate > 20) {
       framesTillCreate *= 0.95;

@@ -29,7 +29,7 @@ function newServerMsg(jsonArgs) {
 io.on('connection', (sock) => {
     let isHost = playersSockets.length === 0 ? true : false;
     playersSockets.push(sock);
-    
+
     sock.emit('joinMatch', newServerMsg({
         // matchId: 'testMatchId',
         'isHost': isHost
@@ -66,6 +66,10 @@ io.on('connection', (sock) => {
 
     sock.on('shoot', (json) => {
         io.emit('shoot', newServerMsg(json));
+    });
+
+    sock.on('enemy', (json) => {
+        io.emit('enemy', newServerMsg(json));
     });
 })
 
