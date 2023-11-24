@@ -94,7 +94,7 @@ sock.on('shoot', (json) => {
     player.shoot();
 })
 
-sock.on('enemy', (enemy) => {
+sock.on('spawnEnemy', (enemy) => {
     if (getSessionId() !== 'Host') {
         let newZombie = new Zombie(enemy.speed);
         newZombie.player = playersDict[enemy.playerId];
@@ -102,6 +102,8 @@ sock.on('enemy', (enemy) => {
         zombies.push(newZombie);
     }
 })
+
+
 
 // ****************************
 // ******** Broadcasts ********
@@ -130,5 +132,5 @@ function broadCastZombie() {
         x: latestZombie.pos.x,
         y: latestZombie.pos.y
     };
-    sock.emit('enemy', enemy);
+    sock.emit('spawnEnemy', enemy);
 }

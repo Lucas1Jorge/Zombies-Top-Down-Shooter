@@ -68,8 +68,8 @@ io.on('connection', (sock) => {
         io.emit('shoot', newServerMsg(json));
     });
 
-    sock.on('enemy', (json) => {
-        io.emit('enemy', newServerMsg(json));
+    sock.on('spawnEnemy', (json) => {
+        io.emit('spawnEnemy', newServerMsg(json));
     });
 })
 
