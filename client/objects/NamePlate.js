@@ -3,7 +3,6 @@ class NamePlate {
       this.id = playerId;
       this.playerPosition = playerPosition;
       this.color = playerColor;
-    //   this.text = createInput();
     }
   
     draw() {
@@ -11,7 +10,9 @@ class NamePlate {
         textStyle(BOLD);
         textSize(16);
         textAlign(CENTER);
-        text(this.id, this.playerPosition.x, this.playerPosition.y - 30); // Draw the fixed text
+        
+        // Draw the fixed text:
+        text(this.id, this.playerPosition.x, this.playerPosition.y - 30);
         // textStyle(NORMAL);
     }
 
