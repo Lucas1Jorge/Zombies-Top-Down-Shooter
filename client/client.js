@@ -47,7 +47,7 @@ document
 
 // ****************************
 // ******* Match events *******
-// ****** Enable listeners ****
+// ***** Enable listeners *****
 // ****************************
 
 sock.on('joinMatch', (json) => {
