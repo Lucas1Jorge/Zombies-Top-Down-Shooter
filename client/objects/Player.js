@@ -13,7 +13,6 @@ class Player {
     rectMode(CENTER);
     push();
     translate(this.pos.x, this.pos.y);
-    this.angle = atan2(mouseY - this.pos.y, mouseX - this.pos.x);
     rotate(this.angle);
     image(playerImg, 0, 0, 30, 30);
     pop();
@@ -49,6 +48,7 @@ class Player {
       if (keyIsDown(75)) forwardSpeed = this.speed; // I
     }
     this.pos.add(sidewaysSpeed, forwardSpeed);
+    this.angle = atan2(mouseY - this.pos.y, mouseX - this.pos.x);
   }
   
   shot(zombie) {
