@@ -23,8 +23,6 @@ writeEvent({
 const sock = io();
 sock.on('message', writeEvent);
 
-
-
 function onFormSubmitted(e) {
     e.preventDefault();
     
