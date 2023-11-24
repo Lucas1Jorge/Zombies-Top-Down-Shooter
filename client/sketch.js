@@ -29,12 +29,6 @@ function setup() {
   sessionId = getSessionId();
 }
 
-// function checkMatchStarted() {
-//   // const matchStartMsg = `2 Players joined. Starting a match...`;
-//   const matchStatus = document.querySelector('#matchStatus');
-//   return matchStatus.innerHTML === 'started';
-// }
-
 function showLoadingAnimation() {
   document.getElementsByClassName('loading-animation')[0].style.display = 'block';
 }
@@ -52,12 +46,10 @@ function draw() {
   
   // Start match if all players connected
   hideLoadingAnimation();
-  
   image(grassImg, 0, 0, width * 2, height * 2);
-  // spawnPlayers();
-
   frame++;
-  let direction = "left";
+
+  // spawnPlayers();
   for (player of players) {
     player.draw();
     if (player.userId === sessionId) {
@@ -69,9 +61,7 @@ function draw() {
     }
   // for (const playerId in playersData) {
   //   let player = playersData[playerId];
-
-    // player.namePlate.draw();
-    // player.namePlate.update();
+  
     player.drawNamePlate();
   }
   
@@ -103,7 +93,6 @@ function draw() {
   textSize(40);
   text(score, width/2, 100);
   
-  // broadCastEvent('move');
   broadCastMove();
 }
 
@@ -116,11 +105,6 @@ function keyPressed() {
   }
   if (event.key === 'c') {
     myPlayer.shoot();
-    // broadCastEvent('shoot');
     broadCastShoot();
   }
 }
-
-// function mouseClicked() {
-//   players[1].shoot();
-// }
