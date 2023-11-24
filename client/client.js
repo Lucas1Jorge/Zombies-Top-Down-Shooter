@@ -37,12 +37,7 @@ function onFormSubmitted(e) {
     const text = input.value;
     input.value = '';
 
-    // let sessionIdJSON = getSessionId();
-    // let sessionInfoJSON = getSessionInfo();
-    // let sessionInfo = JSON.parse(sessionInfoJSON);
     sock.emit('message', {
-        // sender: sessionInfo.id,
-        // color: sessionInfo.color,
         sender: getSessionId(),
         color: getSessionColor(),
         msg: text
@@ -67,28 +62,20 @@ sock.on('joinMatch', (json) => {
         json.msg = `You are the HOST. Waiting for another player to join`;
         writeEvent(json);
         setSessionId('Host');
-        // setMatchStatus('waiting');
     }
     else {
         setSessionId('Guest');
-        // if (json.msg === `2 Players joined. Starting a match...`) {
-        //     setMatchStatus('started');
-        // }
     }
     setMatchStatus('waiting');
 
     // userName = prompt(`Username (How you're seen by others):`);
     // setSessionId(userName);
-    // 
-    // this.pos = createVector(width/2, height/2);
+    
     let newPlayer = new Player(getSessionId(), getSessionColor());
     // newPlayer.pos = createVector(width/2, height/2);
     newPlayer.pos = createVector(500, 350);
     playersData[getSessionId()] = newPlayer;
 
-    // playersDict[json.id] = json.player;
-    // json.playersDict = playersDict
-    // io.emit('move', json);
     sock.emit('joinedMatch', {
         id: getSessionId(),
         color: getSessionColor(),
@@ -115,17 +102,11 @@ sock.on('startMatch', (json) => {
 });
 
 sock.on('move', (json) => {
-    // players = [];
-    // for (playerId in json.playersDict) {
-    //     players.push(playersDict[playerId]);
-    // }
     for (player of players) {
         if (player.userId === json.id) { // && player.userId !== getSessionId()) {
-            // player.shoot();
             player.pos.x = json.posX;
             player.pos.y = json.posY;
             player.angle = json.angle;
-            // player.draw();
         }
     }
 })
@@ -138,14 +119,6 @@ sock.on('shoot', (json) => {
     }
 })
 
-// sock.on('move', (json) => {
-//     let newPlayer = new Player(getSessionId(), getSessionColor());
-//     // newPlayer.pos = createVector(width/2, height/2);
-//     newPlayer.pos = createVector(350, 350);
-//     // playersData[json.id] = newPlayer;
-//     // playersData[json.id] = new Player();
-// });
-
 // function broadCastEvent(event) {
 //     sock.emit(event, {
 //         id: getSessionId(),
@@ -153,7 +126,7 @@ sock.on('shoot', (json) => {
 //         // player: myPlayer,
 //     });
 //     // sock.emit('message', { 
-//     //     msg: `Player ${getSessionId()} shot`
+//     //     msg: `Player ${getSessionId()}'s event`
 //     // });
 // }
 
@@ -164,16 +137,10 @@ function broadCastMove() {
         posY: myPlayer.pos.y,
         angle: myPlayer.angle
     });
-    // sock.emit('message', { 
-    //     msg: `Player ${getSessionId()} shot`
-    // });
 }
 
 function broadCastShoot() {
     sock.emit('shoot', {
         id: getSessionId()
     });
-    // sock.emit('message', { 
-    //     msg: `Player ${getSessionId()} shot`
-    // });
 }
