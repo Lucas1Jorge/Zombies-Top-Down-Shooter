@@ -2,15 +2,6 @@ function getRandomHexColor() {
     const randomColor = Math.floor(Math.random() * 16777215).toString(16);
     const colorCode = `#${randomColor.padStart(6, '0')}`;
     return colorCode;
-
-    // purple: "#722cbc"
-    // pink: "#9807cd"
-
-    // purple: '#9107ef'
-    // blue: '#3b19ef'
-
-    // lime green: "#cce157"
-    // pink: "#dc24a9"
 }
 
 function getSessionInfo() {
