@@ -46,7 +46,6 @@ function setMatchStatus(newStatus) {
 }
 
 function checkMatchStarted() {
-    // const matchStartMsg = `2 Players joined. Starting a match...`;
     const matchStatus = document.querySelector('#matchStatus');
     return matchStatus.innerHTML === 'started';
 }
