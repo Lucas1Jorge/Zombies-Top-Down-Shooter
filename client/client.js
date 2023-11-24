@@ -73,13 +73,13 @@ sock.on('joinMatch', (json) => {
 })
 
 sock.on('startMatch', (json) => {
-    setMatchStatus('started');
     playersDict = {};
     for (playerId in json.playersDict) {
         let playerUpdated = json.playersDict[playerId];
         let playerCopy = new Player(playerUpdated.userId, playerUpdated.color);
         playersDict[playerId] = playerCopy;
     }
+    setMatchStatus('started');
 });
 
 sock.on('move', (json) => {
