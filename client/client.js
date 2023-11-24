@@ -94,7 +94,6 @@ sock.on('shoot', (json) => {
     player.shoot();
 })
 
-
 sock.on('enemy', (enemy) => {
     if (getSessionId() !== 'Host') {
         let newZombie = new Zombie(enemy.speed);
