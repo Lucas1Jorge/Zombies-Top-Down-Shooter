@@ -65,14 +65,10 @@ sock.on('joinMatch', (json) => {
     // setSessionId(userName);
     
     let newPlayer = new Player(getSessionId(), getSessionColor());
-    // newPlayer.pos = createVector(width/2, height/2);
-    newPlayer.pos = createVector(500, 350);
-    playersData[getSessionId()] = newPlayer;
-
     sock.emit('joinedMatch', {
         id: getSessionId(),
         color: getSessionColor(),
-        player: playersData[getSessionId()],
+        player: newPlayer,
     })
 })
 
