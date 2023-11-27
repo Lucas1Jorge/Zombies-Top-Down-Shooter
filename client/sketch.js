@@ -7,8 +7,9 @@ let zombies = [];
 
 let framesTillCreate = 5;
 let frame = 0;
-let speed = 2;
+let speed = 3;
 let score = 0;
+let zoom = 1;
 
 function setup() {
   createCanvas(700, 700);
@@ -26,6 +27,7 @@ function setup() {
   // userName = prompt(`Username (How you're seen by others):`);
   // setSessionId(userName);
   
+  zoom = 1.4;
   sessionId = "New Session";
 }
 

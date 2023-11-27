@@ -14,7 +14,7 @@ class Player {
     push();
     translate(this.pos.x, this.pos.y);
     rotate(this.angle);
-    image(playerImg, 0, 0, 30, 30);
+    image(playerImg, 0, 0, 30 * zoom, 30 * zoom);
     pop();
     
     

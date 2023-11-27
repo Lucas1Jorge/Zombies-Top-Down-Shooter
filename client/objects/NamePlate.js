@@ -8,11 +8,11 @@ class NamePlate {
     draw() {
         fill(this.color);
         textStyle(BOLD);
-        textSize(16);
+        textSize(12 * zoom);
         textAlign(CENTER);
         
         // Draw the fixed text:
-        text(this.id, this.playerPosition.x, this.playerPosition.y - 30);
+        text(this.id, this.playerPosition.x, this.playerPosition.y - 25 * zoom);
         // textStyle(NORMAL);
     }
 
