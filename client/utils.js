@@ -33,7 +33,7 @@ function getMatchStatus() {
 
 function setMatchStatus(newStatus) {
     const matchStatus = document.querySelector('#matchStatus');
-    return matchStatus.innerHTML = newStatus;
+    matchStatus.innerHTML = newStatus;
 }
 
 function checkMatchStarted() {

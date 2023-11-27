@@ -5,7 +5,7 @@ let players = [];
 let playersDict = {};
 let zombies = [];
 
-let framesTillCreate = 20;
+let framesTillCreate = 5;
 let frame = 0;
 let speed = 2;
 let score = 0;
@@ -22,31 +22,32 @@ function setup() {
   zombieImg = loadImage("assets/zombie.png");
   playerImg = loadImage("assets/player.png");
   grassImg = loadImage("./assets/grass.jpg");
-  // zombies.push(new Zombie(random(speed)));
 
   // userName = prompt(`Username (How you're seen by others):`);
   // setSessionId(userName);
-  // 
-  sessionId = getSessionId();
+  
+  sessionId = "New Session";
 }
 
-function showLoadingAnimation() {
+function showLoadingScreen() {
   document.getElementsByClassName('loading-animation')[0].style.display = 'block';
+  document.getElementsByClassName('join-match-button')[0].style.display = 'block';
 }
 
-function hideLoadingAnimation() {
+function hideLoadingScreen() {
   document.getElementsByClassName('loading-animation')[0].style.display = 'none';
+  document.getElementsByClassName('join-match-button')[0].style.display = 'none';
 }
 
 function draw() {
   if (!checkMatchStarted()) {
-    // Show loading animation if waiting for more players to connect
-    showLoadingAnimation();
+    showLoadingScreen();
     return;
   }
   
   // Start match if all players connected
-  hideLoadingAnimation();
+  hideLoadingScreen();
+  sessionId = getSessionId();
   image(grassImg, 0, 0, width * 2, height * 2);
   frame++;
 
@@ -90,6 +91,7 @@ function draw() {
   if (frameCount % 1000 == 0) {
     speed+=0.1;
   }
+  
   fill('#ffffff');
   textStyle(NORMAL);
   textAlign(CENTER);

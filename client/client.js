@@ -41,8 +41,6 @@ document
     .querySelector('#chat-form')
     .addEventListener('submit', onFormSubmitted);
 
-    this.host = false;
-
 
 
 // ****************************
@@ -50,9 +48,19 @@ document
 // ***** Enable listeners *****
 // ****************************
 
-sock.on('joinMatch', (json) => {
+function onJoinMatchButtonClicked() {
+    sock.emit('joinMatch', {});
+}
+
+document
+    .querySelector('#join-match-button')
+    .addEventListener('click', onJoinMatchButtonClicked);
+
+
+
+sock.on('joiningMatch', (json) => {
     if (json.isHost) {
-        json.msg = `You are the HOST. Waiting for another player to join`;
+        json.msg = `You are the HOST. Waiting for other players to join`;
         writeEvent(json);
         setSessionId('Host');
     }
@@ -64,11 +72,9 @@ sock.on('joinMatch', (json) => {
     // userName = prompt(`Username (How you're seen by others):`);
     // setSessionId(userName);
     
-    let newPlayer = new Player(getSessionId(), getSessionColor());
     sock.emit('joinedMatch', {
         id: getSessionId(),
         color: getSessionColor(),
-        player: newPlayer,
     })
 })
 
@@ -76,13 +82,15 @@ sock.on('startMatch', (json) => {
     playersDict = {};
     for (playerId in json.playersDict) {
         let playerUpdated = json.playersDict[playerId];
-        let playerCopy = new Player(playerUpdated.userId, playerUpdated.color);
+        let playerCopy = new Player(playerUpdated.id, playerUpdated.color);
         playersDict[playerId] = playerCopy;
     }
     setMatchStatus('started');
 });
 
 sock.on('move', (json) => {
+    if (json.id === sessionId)
+        return;
     let player = playersDict[json.id];
     player.pos.x = json.posX;
     player.pos.y = json.posY;
@@ -90,6 +98,8 @@ sock.on('move', (json) => {
 })
 
 sock.on('shoot', (json) => {
+    if (json.id === sessionId)
+        return;
     let player = playersDict[json.id];
     player.shoot();
 })
