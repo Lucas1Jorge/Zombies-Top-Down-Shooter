@@ -3,6 +3,7 @@ let sessionId;
 
 let players = [];
 let playersDict = {};
+let playersQueue = {};
 let zombies = [];
 
 let framesTillCreate = 5;
@@ -53,6 +54,7 @@ function draw() {
   image(grassImg, 0, 0, width * 2, height * 2);
   frame++;
 
+  updatePlayersMove();
   players = [];
   for (userId in playersDict) {
     players.push(playersDict[userId]);
