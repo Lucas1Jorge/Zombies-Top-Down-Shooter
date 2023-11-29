@@ -95,8 +95,21 @@ sock.on('move', (json) => {
     playersQueue[json.id].push(json);
 })
 
+function trimBuffer(id) {
+    if (playersQueue[id].length > 20) {
+        for (let i = 0; i < 5; i++) {
+            playersQueue[id].shift();
+        }
+    }
+    else if (playersQueue[id].length > 10) {
+        playersQueue[id].shift();
+    }
+}
+
 function updatePlayersMove() {
     for (id in playersQueue) {
+        trimBuffer(id);
+
         if (playersQueue[id].length > 0) {
             let json = playersQueue[id][0];
             playersQueue[id].shift();

@@ -80,12 +80,10 @@ function draw() {
     let zombie = zombies[i];
     zombie.draw();
     zombie.update();
-    for (player of players) {
-      if (player.shot(zombie)) {
-        score++;
-        delete zombiesDict[zombie.id];
-        broadcastZombieDeath(zombie.id);
-      }
+    if (myPlayer.shot(zombie)) {
+      score++;
+      delete zombiesDict[zombie.id];
+      broadcastZombieDeath(zombie.id);
     }
   }
   
