@@ -5,6 +5,8 @@ let players = [];
 let playersDict = {};
 let playersQueue = {};
 let zombies = [];
+let zombiesDict = {};
+let currZombieId = 0;
 
 let framesTillCreate = 5;
 let frame = 0;
@@ -59,6 +61,10 @@ function draw() {
   for (userId in playersDict) {
     players.push(playersDict[userId]);
   }
+  zombies = [];
+  for (zombieId in zombiesDict) {
+    zombies.push(zombiesDict[zombieId]);
+  }
   
   for (player of players) {
     player.draw();
@@ -71,20 +77,25 @@ function draw() {
   }
   
   for (let i = zombies.length - 1; i >= 0; i--) {
-    zombies[i].draw();
-    zombies[i].update();
+    let zombie = zombies[i];
+    zombie.draw();
+    zombie.update();
     for (player of players) {
-      if (player.shot(zombies[i])) {
-        zombies.splice(i, 1);
+      if (player.shot(zombie)) {
         score++;
+        delete zombiesDict[zombie.id];
+        broadcastZombieDeath(zombie.id);
       }
     }
   }
   
   if (frame > framesTillCreate && zombies.length < 10) {
     if (sessionId === 'Host') {
-      zombies.push(new Zombie(random(speed)));
-      broadCastZombie();
+      let currZombie = new Zombie(random(speed));
+      zombies.push(currZombie);
+      zombiesDict[currZombie.id] = currZombie;
+      broadCastZombie(currZombie.id);
+      currZombieId++;
     }
     frame = 0;
     if (framesTillCreate > 20) {

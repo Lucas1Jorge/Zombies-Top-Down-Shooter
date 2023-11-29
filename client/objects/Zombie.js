@@ -4,6 +4,7 @@ class Zombie {
     this.player = players[Math.floor(Math.random() * 2)];
     this.x = random(width);
     this.y = random(height);
+    this.id = currZombieId.toString();
     
     if (random(1) > 0.5) {
       this.x += width;

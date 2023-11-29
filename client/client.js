@@ -119,11 +119,17 @@ sock.on('shoot', (json) => {
 sock.on('spawnEnemy', (enemy) => {
     if (getSessionId() !== 'Host') {
         let newZombie = new Zombie(enemy.speed);
+        newZombie.id = enemy.id;
         newZombie.player = playersDict[enemy.playerId];
         newZombie.pos = createVector(enemy.x, enemy.y);
         zombies.push(newZombie);
+        zombiesDict[newZombie.id] = newZombie;
     }
 })
+
+sock.on('killEnemy', (payload) => {
+    delete zombiesDict[payload.zombieId];
+});
 
 
 
@@ -146,13 +152,18 @@ function broadCastShoot() {
     });
 }
 
-function broadCastZombie() {
-    let latestZombie = zombies[zombies.length - 1];
+function broadCastZombie(zombieId) {
+    let latestZombie = zombiesDict[zombieId];
     let enemy = {
+        id: latestZombie.id,
         speed: latestZombie.speed,
         playerId: latestZombie.player.userId,
         x: latestZombie.pos.x,
         y: latestZombie.pos.y
     };
     sock.emit('spawnEnemy', enemy);
+}
+
+function broadcastZombieDeath(zombieId) {
+    sock.emit('killEnemy', zombieId);
 }

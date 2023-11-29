@@ -73,6 +73,12 @@ io.on('connection', (sock) => {
     sock.on('spawnEnemy', (json) => {
         io.emit('spawnEnemy', newServerMsg(json));
     });
+
+    sock.on('killEnemy', (zombieId) => {
+        io.emit('killEnemy', newServerMsg({
+            zombieId: zombieId
+        }));
+    });
 })
 
 server.on('error', (err) => {
