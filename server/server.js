@@ -4,6 +4,22 @@ const socketio = require('socket.io');
 const { connect } = require('http2');
 
 // ****************************
+// *********** Utils **********
+// ****************************
+
+function generateRandomHash(length=4) {
+    const chars = '0123456789abcdef';
+    let hash = '';
+
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * chars.length);
+        hash += chars[randomIndex];
+    }
+    
+    return hash;
+}
+
+// ****************************
 // ****** Socket server: ******
 // ****************************
 
@@ -32,8 +48,8 @@ io.on('connection', (sock) => {
     sock.on('joinMatch', (json) => {
         let isHost = playersCnt === 0 ? true : false;
         sock.emit('joiningMatch', newServerMsg({
-            // matchId: 'testMatchId',
-            'isHost': isHost
+            'isHost': isHost,
+            userId: generateRandomHash()
         }));
     });
 
@@ -43,7 +59,6 @@ io.on('connection', (sock) => {
         playersDict[json.id] = json;
         if (playersCnt === minNumOfPlayers) {
             console.log(`All Players joined. Starting a match...`);
-            // console.log(`Players:`, playersDict);
             playersSockets.forEach(playerSocket => playerSocket.emit('message', newServerMsg({
                 msg: `All Players joined. Starting a match...`
             })));

@@ -1,22 +1,21 @@
 class Zombie {
   
   constructor(speed) {
-    this.player = players[Math.floor(Math.random() * 2)];
-    this.x = random(width);
-    this.y = random(height);
+    this.player = players[Math.floor(Math.random() * players.length)];
     this.id = currZombieId.toString();
-    
+
     if (random(1) > 0.5) {
-      this.x += width;
+      this.x = width * (1 + random(1));
     } else {
-      this.x -= width;
+      this.x = width * (-random(1));
     }
-    
+
     if (random(1) > 0.5) {
-      this.y += height;
+      this.y = height * (1 + random(1));
     } else {
-      this.y -= height;
+      this.y = height * (-random(1));
     }
+
     this.pos = createVector(this.x, this.y);
     this.speed = speed;
     this.angle = 0;

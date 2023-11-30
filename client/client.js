@@ -65,7 +65,7 @@ sock.on('joiningMatch', (json) => {
         setSessionId('Host');
     }
     else {
-        setSessionId('Guest');
+        setSessionId('Guest-' + json.userId);
     }
     setMatchStatus('waiting');
 
@@ -78,14 +78,31 @@ sock.on('joiningMatch', (json) => {
     })
 })
 
+function positionPlayers(numOfPlayers) {
+    let idx = 0;
+    const radius = Math.min(width, height) / 2;
+    const center = createVector(width / 2, height / 2);
+    for (key in playersDict) {
+        let player = playersDict[key];
+        let angleInRadians = 2 * Math.PI * idx / numOfPlayers;
+        let radialDisplacement = (0.2 + 0.8 * random(1)) * radius;
+        player.pos.x = center.x + radialDisplacement * cos(angleInRadians);
+        player.pos.y = center.y + radialDisplacement * sin(angleInRadians);
+        idx++;
+    }
+}
+
 sock.on('startMatch', (json) => {
+    let numOfPlayers = 0;
     playersDict = {};
     for (playerId in json.playersDict) {
         let playerUpdated = json.playersDict[playerId];
         let playerCopy = new Player(playerUpdated.id, playerUpdated.color);
         playersDict[playerId] = playerCopy;
         playersQueue[playerId] = [];
+        numOfPlayers++;
     }
+    positionPlayers(numOfPlayers);
     setMatchStatus('started');
 });
 
